@@ -1,3 +1,80 @@
-* {
+﻿* {
     background-color: white;
+}
+/* Pourquoi Magic Investigation */
+.why-magic {
+    background: #453d34;
+    color: #fff;
+    padding: 54px 0 0;
+}
+.why-magic * {
+    background-color: transparent;
+}
+.why-magic__header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+    text-align: center;
+}
+.why-magic__eyebrow {
+    color: #c7b69b;
+    font-size: 13px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin: 0 0 38px;
+}
+.why-magic__header h2 {
+    color: #fff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 400;
+    margin: 0 0 34px;
+}
+.why-magic__header > p:not(.why-magic__eyebrow) {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0 0 16px;
+}
+.why-magic__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.why-magic__item {
+    border-top: 1px solid rgba(222, 210, 190, .72);
+    min-width: 0;
+    padding: 30px 32px 32px;
+}
+.why-magic__item:nth-child(odd) {
+    border-right: 1px solid rgba(222, 210, 190, .72);
+}
+.why-magic__item h3 {
+    color: #fff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0 0 28px;
+}
+.why-magic__item h3::before {
+    color: #c7b69b;
+    content: "—";
+    margin-right: 12px;
+}
+.why-magic__item p {
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0;
+}
+@media (max-width: 700px) {
+    .why-magic { padding-top: 42px; }
+    .why-magic__header { padding-bottom: 24px; }
+    .why-magic__eyebrow { margin-bottom: 26px; }
+    .why-magic__header h2 { margin-bottom: 24px; }
+    .why-magic__header > p:not(.why-magic__eyebrow) { font-size: 16px; }
+    .why-magic__grid { grid-template-columns: 1fr; }
+    .why-magic__item { padding: 26px 22px; }
+    .why-magic__item:nth-child(odd) { border-right: 0; }
+    .why-magic__item h3 { font-size: 23px; margin-bottom: 18px; }
+    .why-magic__item p { font-size: 16px; }
 }
