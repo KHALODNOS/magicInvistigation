@@ -504,7 +504,27 @@
         }
 
         /*# sourceURL=global-styles-inline-css */
-    </style>
+    
+        /* ══ FOOTER FULL-WIDTH FIX ══ */
+        /* Neutralize ALL Elementor wrapper constraints around footer */
+        footer.site-footer {
+            position: relative !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100vw !important;
+            max-width: 100vw !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            box-sizing: border-box !important;
+        }
+        /* When footer is moved to body-level by JS */
+        body > footer.site-footer {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+</style>
     <link rel='stylesheet' id='hello-elementor-css'
         href='https://veraandvale.co.uk/wp-content/themes/hello-elementor/assets/css/reset.css?ver=3.4.9' media='all' />
     <link rel='stylesheet' id='hello-elementor-theme-style-css'
@@ -799,56 +819,190 @@
         }
         @media (prefers-reduced-motion: reduce) { .why-magic__item, .why-magic__item:hover { transition: none; transform: none; } }
 
+        /* ═══════════════ FAQ — DARK LUXURY REDESIGN ═══════════════ */
         .faq-section {
-            padding: clamp(4.5rem, 8vw, 7rem) 1.25rem;
-            color: #25231f;
-            background: #f5f2ed;
-            border-block: 1px solid rgba(75, 64, 48, .1);
+            padding: clamp(5rem, 9vw, 8rem) clamp(1rem, 4vw, 2rem);
+            color: #f6f3ee;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(200,173,126,.13) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 100%, rgba(146,123,92,.07) 0%, transparent 40%),
+                #0d0c0a;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
         }
-        .faq-section__inner { width: min(100%, 920px); margin-inline: auto; }
-        .faq-section__header { max-width: 700px; margin: 0 auto clamp(2rem, 4vw, 3rem); text-align: center; }
+        .faq-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(200,173,126,.04) 0%, transparent 35%),
+                radial-gradient(circle at 85% 70%, rgba(200,173,126,.04) 0%, transparent 35%);
+            pointer-events: none;
+        }
+        .faq-section::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(200,173,126,.2) 20%, #c8ad7e 50%, rgba(200,173,126,.2) 80%, transparent 100%);
+            box-shadow: 0 0 20px rgba(200,173,126,.4);
+        }
+        .faq-section__inner {
+            width: min(100%, 940px);
+            margin-inline: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .faq-section__header {
+            max-width: 680px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+        }
         .faq-section__eyebrow {
-            margin: 0 0 .85rem; color: #927b5c; font-size: .75rem; font-weight: 700;
-            letter-spacing: .19em; line-height: 1.5; text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            margin: 0 0 1.1rem;
+            color: #c8ad7e;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .22em;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+        .faq-section__eyebrow::before,
+        .faq-section__eyebrow::after {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c8ad7e);
+        }
+        .faq-section__eyebrow::after {
+            background: linear-gradient(90deg, #c8ad7e, transparent);
         }
         .faq-section__header h2 {
-            margin: 0 0 1rem; color: #211f1b; font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 600; letter-spacing: -.035em; line-height: 1.15;
+            margin: 0 0 1.1rem;
+            color: #faf8f3;
+            font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1.12;
+            background: linear-gradient(135deg, #faf8f3 0%, #c8ad7e 55%, #faf8f3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .faq-section__header > p:last-child { margin: 0; color: #6c675e; font-size: 1.05rem; line-height: 1.75; }
-        .faq-list { display: grid; gap: .75rem; }
+        .faq-section__header > p:last-child {
+            margin: 0;
+            color: rgba(246,243,238,.62);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        .faq-list {
+            display: grid;
+            gap: .9rem;
+            counter-reset: faq-counter;
+        }
         .faq-item {
-            overflow: hidden; border: 1px solid #e5dfd5; border-radius: 5px;
-            background: #fff; box-shadow: 0 8px 24px rgba(43, 37, 29, .035);
-            transition: border-color .2s ease, box-shadow .2s ease;
+            counter-increment: faq-counter;
+            overflow: hidden;
+            border: 1px solid rgba(200,173,126,.14);
+            border-radius: 14px;
+            background: rgba(255,255,255,.025);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 24px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.05);
+            transition: border-color .3s ease, box-shadow .3s ease, background .3s ease, transform .3s cubic-bezier(.22,1,.36,1);
         }
-        .faq-item[open] { border-color: rgba(150, 126, 91, .55); box-shadow: 0 10px 28px rgba(43, 37, 29, .07); }
+        .faq-item:hover {
+            border-color: rgba(200,173,126,.35);
+            box-shadow: 0 8px 40px rgba(0,0,0,.28), 0 0 0 1px rgba(200,173,126,.12), inset 0 1px 0 rgba(255,255,255,.08);
+            background: rgba(200,173,126,.045);
+            transform: translateY(-2px);
+        }
+        .faq-item[open] {
+            border-color: rgba(200,173,126,.5);
+            box-shadow: 0 12px 48px rgba(0,0,0,.3), 0 0 30px rgba(200,173,126,.08), inset 0 1px 0 rgba(255,255,255,.1);
+            background: rgba(200,173,126,.06);
+        }
         .faq-item summary {
-            position: relative; display: flex; align-items: center; justify-content: space-between;
-            gap: 1.5rem; padding: 1.25rem 1.4rem; color: #292722;
-            cursor: pointer; font-size: 1.02rem; font-weight: 600; line-height: 1.5;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+            padding: 1.35rem 1.6rem;
+            color: #f0ece4;
+            cursor: pointer;
+            font-size: 1.02rem;
+            font-weight: 600;
+            line-height: 1.5;
             list-style: none;
+            user-select: none;
         }
+        .faq-item summary::before {
+            content: counter(faq-counter, decimal-leading-zero);
+            flex-shrink: 0;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            color: #c8ad7e;
+            opacity: .65;
+            min-width: 1.6rem;
+        }
+        .faq-item:hover summary { color: #faf8f3; }
+        .faq-item[open] summary { color: #faf8f3; }
         .faq-item summary::-webkit-details-marker { display: none; }
         .faq-item summary::after {
-            flex: 0 0 auto; display: grid; width: 1.8rem; height: 1.8rem; place-items: center;
-            border: 1px solid #d8cbb8; border-radius: 50%; color: #8d7658;
-            content: "+"; font-size: 1.25rem; font-weight: 400; line-height: 1;
-            transition: transform .2s ease, background .2s ease, color .2s ease;
+            flex: 0 0 auto;
+            display: grid;
+            width: 2rem;
+            height: 2rem;
+            place-items: center;
+            border: 1.5px solid rgba(200,173,126,.3);
+            border-radius: 50%;
+            color: #c8ad7e;
+            content: "+";
+            font-size: 1.3rem;
+            font-weight: 300;
+            line-height: 1;
+            transition: transform .35s cubic-bezier(.22,1,.36,1), background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
         }
-        .faq-item[open] summary::after { transform: rotate(45deg); color: #fff; background: #8d7658; }
-        .faq-item summary:focus-visible { outline: 2px solid #8d7658; outline-offset: -3px; }
-        .faq-item__answer { padding: 0 1.4rem 1.35rem; color: #69645b; }
-        .faq-item__answer p { max-width: 780px; margin: 0; font-size: .98rem; line-height: 1.8; }
-        .contact-details { align-content: start; }
-        .contact-details__intro { margin-bottom: 1.5rem; }
-        .contact-details__eyebrow { margin: 0 0 .65rem; color: #C5B69E; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-        .contact-details__intro h2 { margin: 0 0 .75rem; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; }
-        .contact-details__intro > p:last-child { max-width: 34rem; margin: 0; line-height: 1.75; opacity: .78; }
+        .faq-item:hover summary::after {
+            border-color: rgba(200,173,126,.6);
+            box-shadow: 0 0 10px rgba(200,173,126,.2);
+        }
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+            color: #0d0c0a;
+            background: #c8ad7e;
+            border-color: #c8ad7e;
+            box-shadow: 0 0 16px rgba(200,173,126,.5);
+        }
+        .faq-item summary:focus-visible {
+            outline: 2px solid rgba(200,173,126,.6);
+            outline-offset: -3px;
+            border-radius: 12px;
+        }
+        .faq-item__answer {
+            padding: 0 1.6rem 1.5rem 4.4rem;
+            color: rgba(246,243,238,.7);
+        }
+        .faq-item__answer p {
+            max-width: 780px;
+            margin: 0;
+            font-size: .97rem;
+            line-height: 1.85;
+            border-top: 1px solid rgba(200,173,126,.12);
+            padding-top: 1rem;
+        }
         @media (max-width: 600px) {
-            .faq-section { padding-inline: 1rem; }
-            .faq-item summary { gap: 1rem; padding: 1.05rem 1rem; font-size: .97rem; }
-            .faq-item__answer { padding: 0 1rem 1.1rem; }
+            .faq-section { padding-inline: .85rem; }
+            .faq-item summary { gap: .8rem; padding: 1.1rem 1.1rem; font-size: .97rem; }
+            .faq-item__answer { padding: 0 1rem 1.2rem 1rem; }
+            .faq-item summary::before { display: none; }
         }
         @media (prefers-reduced-motion: reduce) { .faq-item, .faq-item summary::after { transition: none; } }
 
@@ -948,31 +1102,509 @@
         .contact-form__intro h3 { margin: 0 0 .35rem; color: #292722; font-size: 1.4rem; letter-spacing: -.02em; }
         .contact-form__intro span { display: block; max-width: 34rem; line-height: 1.55; }
 
+        /* Refined contact form */
+        .contact-section .elementor-form {
+            position: relative; overflow: hidden; padding: clamp(1.5rem, 3vw, 2.25rem);
+            border: 1px solid rgba(197,182,158,.55); border-radius: 14px;
+            background: linear-gradient(145deg, #fffefa, #f4f0e8);
+            box-shadow: 0 28px 70px rgba(0,0,0,.3);
+        }
+        .contact-section .elementor-form::before {
+            position: absolute; inset: 0 0 auto; height: 4px;
+            background: linear-gradient(90deg, #927b5c, #d3c3a7, #927b5c); content: "";
+        }
+        .contact-form__intro { margin-bottom: 1.4rem; padding: .2rem 0 1rem 1rem; }
+        .contact-form__intro h3 { font-size: clamp(1.45rem, 2.5vw, 1.8rem); }
+        .contact-section .elementor-field-label { display: block; margin-bottom: .45rem; color: #39352f; font-size: .82rem; font-weight: 700; letter-spacing: .02em; }
+        .contact-section .elementor-field-textual {
+            width: 100%; min-height: 3rem; padding: .75rem .9rem;
+            border: 1px solid #ded8ce; border-radius: 8px; color: #292722;
+            background: rgba(255,255,255,.88); transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .contact-section .elementor-field-textual:hover { border-color: #b9a78b; }
+        .contact-section .elementor-field-textual:focus { border-color: #927b5c; background: #fff; box-shadow: 0 0 0 3px rgba(146,123,92,.16); outline: 0; }
+        .contact-section textarea.elementor-field-textual { min-height: 8rem; resize: vertical; }
+        .contact-section .elementor-select-wrapper select { appearance: none; }
+        .contact-section .elementor-select-wrapper .select-caret-down-wrapper { right: .9rem; color: #927b5c; }
+        .contact-section .elementor-field-type-submit { margin-top: .3rem !important; }
+        .contact-section .elementor-button {
+            min-height: 3.4rem; padding: .85rem 1.25rem; border: 0; border-radius: 8px;
+            color: #fff; background: linear-gradient(135deg, #292722, #484237);
+            box-shadow: 0 8px 18px rgba(41,39,34,.17); font-weight: 700; letter-spacing: .02em;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .contact-section .elementor-button:hover { transform: translateY(-2px); background: linear-gradient(135deg, #806b4e, #a18a68); box-shadow: 0 12px 24px rgba(41,39,34,.2); }
+        .contact-section .elementor-button:focus-visible { outline: 3px solid #bba783; outline-offset: 3px; }
+        @media (max-width: 520px) {
+            .contact-section .elementor-form { padding: 1.35rem 1rem; border-radius: 11px; }
+            .contact-form__intro { margin-bottom: 1.1rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .contact-section .elementor-field-textual, .contact-section .elementor-button { transition: none; }
+        }
+
+        /* Contact — signature layout */
+        #contact.contact-section {
+            --contact-gold: #c8ad7e;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            padding: clamp(4.5rem, 8vw, 7rem) 1.5rem !important;
+            background:
+                radial-gradient(ellipse at 5% 100%, rgba(174, 139, 82, .17), transparent 36%),
+                radial-gradient(ellipse at 100% 0%, rgba(108, 91, 66, .16), transparent 34%),
+                #171715 !important;
+        }
+        #contact.contact-section * { background-color: transparent; }
+        #contact.contact-section::before {
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: -10rem;
+            width: 31rem;
+            aspect-ratio: 1;
+            border: 1px solid rgba(200, 173, 126, .09);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3.2rem rgba(200, 173, 126, .025), 0 0 0 6.4rem rgba(200, 173, 126, .018);
+            content: "";
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        #contact.contact-section > .e-con-inner {
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+            align-items: stretch;
+            gap: clamp(2rem, 4vw, 4rem);
+            width: min(100%, 1240px);
+        }
+        #contact .contact-details { align-content: center; padding-block: 1.5rem; }
+        #contact .contact-details__intro { margin-bottom: 2.25rem; }
+        #contact .contact-details__eyebrow {
+            margin-bottom: 1.25rem;
+            padding: .55rem .85rem;
+            border-color: rgba(200, 173, 126, .27);
+            color: #ddc99f;
+            background: rgba(200, 173, 126, .08);
+            font-size: .68rem;
+            letter-spacing: .16em;
+        }
+        #contact .contact-details__eyebrow::before { box-shadow: 0 0 12px rgba(221, 201, 159, .7); }
+        #contact .contact-details__intro h2 {
+            max-width: 16ch;
+            margin-bottom: 1rem;
+            color: #faf8f3;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.5rem, 4.4vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -.045em;
+            line-height: 1.04;
+        }
+        #contact .contact-details__intro > p:last-child {
+            max-width: 30rem;
+            color: rgba(246, 243, 238, .68);
+            font-size: 1.02rem;
+            line-height: 1.8;
+        }
+        #contact .contact-methods { gap: .65rem; }
+        #contact .contact-method {
+            padding: .85rem 1rem;
+            border-color: rgba(226, 215, 194, .13);
+            border-radius: 12px;
+            background: linear-gradient(110deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+            backdrop-filter: blur(8px);
+            transition: transform .25s ease, border-color .25s ease, background .25s ease;
+        }
+        #contact .contact-method:hover, #contact .contact-method:focus-visible {
+            transform: translateX(6px);
+            border-color: rgba(200, 173, 126, .48);
+            background: rgba(200, 173, 126, .09);
+        }
+        #contact .contact-method__icon {
+            flex-basis: 2.8rem;
+            width: 2.8rem;
+            height: 2.8rem;
+            border-color: rgba(200, 173, 126, .33);
+            border-radius: 10px;
+            color: #ddc99f;
+            background: rgba(200, 173, 126, .08);
+        }
+        #contact .contact-method small { color: #c8ad7e; font-size: .66rem; letter-spacing: .15em; }
+        #contact .contact-method strong { color: #f7f4ed; font-size: .96rem; }
+        #contact .contact-details__note {
+            display: flex;
+            align-items: flex-start;
+            gap: .7rem;
+            margin-top: 1.25rem;
+            color: rgba(246, 243, 238, .58);
+            font-size: .82rem;
+        }
+        #contact .contact-details__note::before {
+            flex: 0 0 auto;
+            width: 1rem;
+            height: 1rem;
+            margin-top: .12rem;
+            border: 1px solid rgba(200, 173, 126, .55);
+            border-radius: 50%;
+            color: #ddc99f;
+            content: "✓";
+            font-size: .65rem;
+            line-height: .95rem;
+            text-align: center;
+        }
+        #contact .contact-form__intro { margin-bottom: 1.6rem; padding: 0 0 1.2rem; border: 0; }
+        #contact .contact-form__intro p { color: #967c55; }
+        #contact .contact-form__intro h3 { margin-bottom: .45rem; font-size: clamp(1.6rem, 2.5vw, 2rem); letter-spacing: -.035em; }
+        #contact .contact-form__intro span { color: #716b61; }
+        #contact .elementor-form {
+            padding: clamp(1.5rem, 3.2vw, 2.6rem);
+            border: 1px solid rgba(255,255,255,.72);
+            border-radius: 18px;
+            background: linear-gradient(145deg, #fffefa, #f5f1e9);
+            box-shadow: 0 35px 90px rgba(0,0,0,.34), 0 2px 8px rgba(0,0,0,.12);
+            animation: contact-arrive .75s cubic-bezier(.2,.7,.2,1) both;
+        }
+        #contact .elementor-form::before { height: 3px; opacity: .9; }
+        #contact .elementor-field-label { color: #353129; font-size: .78rem; letter-spacing: .035em; }
+        #contact .elementor-field-textual {
+            min-height: 3.15rem;
+            border-color: #e2ddd3;
+            border-radius: 9px;
+            background: rgba(255,255,255,.78);
+        }
+        #contact textarea.elementor-field-textual { min-height: 8.5rem; }
+        #contact .elementor-field-textual:hover { border-color: #b9a989; }
+        #contact .elementor-field-textual:focus { border-color: #927b5c; box-shadow: 0 0 0 4px rgba(146,123,92,.13); }
+        #contact .elementor-button {
+            min-height: 3.5rem;
+            border-radius: 9px;
+            background: linear-gradient(110deg, #292722, #494337);
+            box-shadow: 0 10px 22px rgba(41,39,34,.16);
+        }
+        #contact .elementor-button:hover { background: linear-gradient(110deg, #806b4e, #a18a68); }
+        @keyframes contact-arrive {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 800px) {
+            #contact.contact-section { padding-block: 4rem !important; }
+            #contact.contact-section > .e-con-inner { grid-template-columns: 1fr; gap: 2rem; }
+            #contact .contact-details { padding-block: 0; }
+            #contact .contact-details__intro h2 { max-width: 16ch; }
+        }
+        @media (max-width: 520px) {
+            #contact.contact-section { padding-inline: 1rem !important; }
+            #contact .contact-details__intro h2 { font-size: clamp(2.35rem, 11vw, 3rem); }
+            #contact .elementor-form { padding: 1.35rem 1rem; border-radius: 14px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #contact .elementor-form { animation: none; }
+            #contact .contact-method, #contact .elementor-field-textual, #contact .elementor-button { transition: none; }
+        }
+
+        /* ══════════════ REDESIGNED LUXURY FOOTER ══════════════ */
         .site-footer {
-            padding: 3.5rem 1.25rem 1.25rem;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            background:
+                radial-gradient(ellipse at 50% -20%, rgba(200, 173, 126, 0.16) 0%, transparent 55%),
+                radial-gradient(ellipse at 95% 100%, rgba(146, 123, 92, 0.08) 0%, transparent 40%),
+                #0b0a08;
             color: #f6f3ee;
-            background: #111110;
-            border-top: 1px solid rgba(197,182,158,.25);
+            padding: clamp(4rem, 7vw, 5.5rem) clamp(1.5rem, 4vw, 3rem) 1.75rem;
+            overflow: hidden;
+            isolation: isolate;
+            border-top: none;
+            margin: 0;
         }
-        .site-footer__inner { width: min(100%, 1160px); margin-inline: auto; }
-        .site-footer__top { display: grid; grid-template-columns: 1.5fr .7fr 1fr; gap: 3rem; padding-bottom: 2.5rem; }
-        .site-footer__wordmark { color: #f6f3ee; font-size: 1.25rem; font-weight: 700; letter-spacing: .18em; text-decoration: none; }
-        .site-footer__wordmark span { color: #C5B69E; font-weight: 400; }
-        .site-footer__brand p { max-width: 27rem; margin: 1rem 0 0; color: rgba(246,243,238,.62); font-size: .94rem; line-height: 1.75; }
-        .site-footer__top h2 { margin: 0 0 1rem; color: #C5B69E; font-size: .76rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-        .site-footer__nav, .site-footer__contact { display: flex; flex-direction: column; align-items: flex-start; gap: .7rem; }
-        .site-footer__nav a, .site-footer__contact a { color: rgba(246,243,238,.72); font-size: .92rem; line-height: 1.5; text-decoration: none; transition: color .2s ease; }
-        .site-footer__nav a:hover, .site-footer__contact a:hover { color: #C5B69E; }
-        .site-footer__bottom { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1.15rem; border-top: 1px solid rgba(255,255,255,.12); }
-        .site-footer__bottom p { margin: 0; color: rgba(246,243,238,.48); font-size: .8rem; line-height: 1.6; }
-        @media (max-width: 700px) {
-            .site-footer { padding: 2.75rem 1.15rem 1.15rem; }
-            .site-footer__top { grid-template-columns: 1fr 1fr; gap: 2rem 1.25rem; }
-            .site-footer__brand { grid-column: 1 / -1; }
-            .site-footer__bottom { flex-direction: column; gap: .4rem; }
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(200, 173, 126, 0.2) 20%, #c8ad7e 50%, rgba(200, 173, 126, 0.2) 80%, transparent 100%);
+            box-shadow: 0 0 15px rgba(200, 173, 126, 0.4);
         }
-        @media (max-width: 420px) { .site-footer__top { grid-template-columns: 1fr; } .site-footer__brand { grid-column: auto; } }
-        @media (prefers-reduced-motion: reduce) { .site-footer__nav a, .site-footer__contact a { transition: none; } }
+        .site-footer__inner {
+            width: 100%;
+            max-width: 100%;
+            margin-inline: auto;
+        }
+        .site-footer__top {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(170px, 0.95fr) minmax(200px, 1.05fr) minmax(220px, 1.1fr);
+            gap: clamp(2rem, 4.5vw, 4.5rem);
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(200, 173, 126, 0.14);
+        }
+        .site-footer__wordmark {
+            display: inline-flex;
+            align-items: center;
+            gap: .65rem;
+            color: #faf8f3;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: .18em;
+            text-decoration: none;
+            transition: transform .25s ease;
+        }
+        .site-footer__wordmark:hover {
+            transform: translateX(3px);
+        }
+        .site-footer__wordmark span {
+            color: #c8ad7e;
+            font-weight: 400;
+        }
+        .site-footer__wordmark-icon {
+            font-size: 1.25rem;
+            color: #c8ad7e;
+        }
+        .site-footer__brand p {
+            max-width: 26rem;
+            margin: 1.1rem 0 1.3rem;
+            color: rgba(246, 243, 238, 0.65);
+            font-size: .93rem;
+            line-height: 1.75;
+        }
+        .site-footer__status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .38rem .85rem;
+            border: 1px solid rgba(200, 173, 126, 0.28);
+            border-radius: 999px;
+            background: rgba(200, 173, 126, 0.07);
+            color: #ddc99f;
+            font-size: .74rem;
+            font-weight: 600;
+            letter-spacing: .06em;
+        }
+        .site-footer__status-dot {
+            width: .45rem;
+            height: .45rem;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+            animation: ft-pulse 2s infinite;
+        }
+        @keyframes ft-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        .site-footer__col-title {
+            margin: 0 0 1.25rem;
+            color: #c8ad7e;
+            font-size: .74rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .site-footer__col-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(200, 173, 126, 0.18);
+            max-width: 32px;
+        }
+        .site-footer__nav {
+            display: flex;
+            flex-direction: column;
+            gap: .8rem;
+        }
+        .site-footer__nav a {
+            position: relative;
+            color: rgba(246, 243, 238, 0.72);
+            font-size: .92rem;
+            line-height: 1.5;
+            text-decoration: none;
+            transition: color .25s ease, transform .25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+        }
+        .site-footer__nav a::before {
+            content: '›';
+            color: #c8ad7e;
+            font-size: 1rem;
+            line-height: 1;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all .25s ease;
+        }
+        .site-footer__nav a:hover {
+            color: #faf8f3;
+            transform: translateX(4px);
+        }
+        .site-footer__nav a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .site-footer__guarantees {
+            display: flex;
+            flex-direction: column;
+            gap: .95rem;
+        }
+        .site-footer__guarantee-card {
+            display: flex;
+            align-items: flex-start;
+            gap: .75rem;
+            padding: .75rem .9rem;
+            border: 1px solid rgba(200, 173, 126, 0.14);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.025);
+            transition: border-color .25s, transform .25s, background .25s;
+        }
+        .site-footer__guarantee-card:hover {
+            border-color: rgba(200, 173, 126, 0.45);
+            background: rgba(200, 173, 126, 0.06);
+            transform: translateY(-2px);
+        }
+        .site-footer__guarantee-icon {
+            font-size: 1.1rem;
+            color: #c8ad7e;
+            line-height: 1.2;
+        }
+        .site-footer__guarantee-text strong {
+            display: block;
+            color: #faf8f3;
+            font-size: .86rem;
+            font-weight: 600;
+            margin-bottom: .15rem;
+        }
+        .site-footer__guarantee-text span {
+            display: block;
+            color: rgba(246, 243, 238, 0.58);
+            font-size: .78rem;
+            line-height: 1.45;
+        }
+        .site-footer__contact {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+        }
+        .site-footer__contact-pill {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            padding: .75rem 1rem;
+            border: 1px solid rgba(200, 173, 126, 0.16);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #f6f3ee;
+            text-decoration: none;
+            transition: all .25s ease;
+        }
+        .site-footer__contact-pill:hover {
+            border-color: rgba(200, 173, 126, 0.55);
+            background: rgba(200, 173, 126, 0.09);
+            transform: translateX(4px);
+            color: #faf8f3;
+        }
+        .site-footer__contact-icon {
+            width: 2.1rem;
+            height: 2.1rem;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: rgba(200, 173, 126, 0.12);
+            color: #c8ad7e;
+            font-size: .95rem;
+            flex-shrink: 0;
+        }
+        .site-footer__contact-meta {
+            display: flex;
+            flex-direction: column;
+            gap: .1rem;
+            min-width: 0;
+        }
+        .site-footer__contact-meta small {
+            color: #c8ad7e;
+            font-size: .65rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .site-footer__contact-meta strong {
+            color: #faf8f3;
+            font-size: .88rem;
+            font-weight: 500;
+            overflow-wrap: anywhere;
+        }
+        .site-footer__bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            padding-top: 1.75rem;
+        }
+        .site-footer__bottom-left {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(246, 243, 238, 0.5);
+            font-size: .82rem;
+        }
+        .site-footer__bottom-left span {
+            color: rgba(200, 173, 126, 0.35);
+        }
+        .site-footer__back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            padding: .45rem .95rem;
+            border: 1px solid rgba(200, 173, 126, 0.22);
+            border-radius: 999px;
+            background: rgba(200, 173, 126, 0.06);
+            color: #ddc99f;
+            font-size: .78rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .25s ease;
+        }
+        .site-footer__back-to-top:hover {
+            border-color: #c8ad7e;
+            background: rgba(200, 173, 126, 0.18);
+            color: #faf8f3;
+            transform: translateY(-2px);
+        }
+        .site-footer__back-to-top svg {
+            transition: transform .25s ease;
+        }
+        .site-footer__back-to-top:hover svg {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 1024px) {
+            .site-footer__top {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem 2rem;
+            }
+            .site-footer__brand {
+                grid-column: 1 / -1;
+            }
+        }
+        @media (max-width: 640px) {
+            .site-footer {
+                padding: 3.5rem 1.25rem 1.5rem;
+            }
+            .site-footer__top {
+                grid-template-columns: 1fr;
+                gap: 2.25rem;
+                padding-bottom: 2.25rem;
+            }
+            .site-footer__bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .85rem;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .site-footer__status-dot { animation: none; }
+            .site-footer__wordmark, .site-footer__nav a, .site-footer__guarantee-card, .site-footer__contact-pill, .site-footer__back-to-top { transition: none; }
+        }
     </style>
 </head>
 
@@ -982,342 +1614,118 @@
 
     <a class="skip-link screen-reader-text" href="#content">Aller au contenu</a>
 
-    <header data-elementor-type="header" data-elementor-id="48" class="elementor elementor-48 elementor-location-header"
-        data-elementor-post-type="elementor_library">
-        <div class="elementor-element elementor-element-e15dd61 e-flex e-con-boxed e-con e-parent" data-id="e15dd61"
-            data-element_type="container" data-e-type="container"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-            <div class="e-con-inner">
-                <div class="elementor-element elementor-element-0c20dd2 e-con-full e-flex e-con e-child"
-                    data-id="0c20dd2" data-element_type="container" data-e-type="container">
-                    <div class="elementor-element elementor-element-52d68a6 elementor-widget elementor-widget-image"
-                        data-id="52d68a6" data-element_type="widget" data-e-type="widget"
-                        data-widget_type="image.default">
-                        <a href="#">
-                            <img fetchpriority="high" width="892" height="279"
-                                src="https://veraandvale.co.uk/wp-content/uploads/2026/06/Vera-Vale-White-e1780669062395.png"
-                                class="attachment-full size-full wp-image-79"
-                                alt="Magic Investigation logo d’enquêtes privées"
-                                srcset="https://veraandvale.co.uk/wp-content/uploads/2026/06/Vera-Vale-White-e1780669062395.png 892w, https://veraandvale.co.uk/wp-content/uploads/2026/06/Vera-Vale-White-e1780669062395-300x94.png 300w, https://veraandvale.co.uk/wp-content/uploads/2026/06/Vera-Vale-White-e1780669062395-768x240.png 768w"
-                                sizes="(max-width: 892px) 100vw, 892px" /> </a>
-                    </div>
-                </div>
-                <div class="elementor-element elementor-element-5760a91 e-con-full e-flex e-con e-child"
-                    data-id="5760a91" data-element_type="container" data-e-type="container">
-                    <div class="elementor-element elementor-element-2027870 elementor-nav-menu--stretch elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu"
-                        data-id="2027870" data-element_type="widget" data-e-type="widget"
-                        data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;svg aria-hidden=\&quot;true\&quot; class=\&quot;e-font-icon-svg e-fas-caret-down\&quot; viewBox=\&quot;0 0 320 512\&quot; xmlns=\&quot;http:\/\/www.w3.org\/2000\/svg\&quot;&gt;&lt;path d=\&quot;M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z\&quot;&gt;&lt;\/path&gt;&lt;\/svg&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}"
-                        data-widget_type="nav-menu.default">
-                        <nav aria-label="Menu"
-                            class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-none">
-                            <ul id="menu-1-2027870" class="elementor-nav-menu">
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-54 current_page_item menu-item-283">
-                                    <a href="#" aria-current="page"
-                                        class="elementor-item elementor-item-active">Accueil</a>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-284">
-                                    <a href="#" class="elementor-item">À propos<span
-                                            class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-286">
-                                            <a href="#" class="elementor-sub-item">À propos
-                                                Us</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-285">
-                                            <a href="#"
-                                                class="elementor-sub-item">Spécialistes de confiance et capacité opérationnelle
-                                                capability</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-353">
-                                    <a href="#" class="elementor-item elementor-item-anchor">Pour les particuliers<span
-                                            class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-297">
-                                            <a href="#"
-                                                class="elementor-sub-item">Enquêtes relationnelles</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-294">
-                                            <a href="#"
-                                                class="elementor-sub-item">Recherche et vérification de personnes</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-289">
-                                            <a href="#"
-                                                class="elementor-sub-item">Empreinte numérique et audits de confidentialité</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-293">
-                                            <a href="#"
-                                                class="elementor-sub-item">Menaces en ligne, harcèlement et
-                                                usurpation d’identité</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-290">
-                                            <a href="#"
-                                                class="elementor-sub-item">Emploi et personnel de maison
-                                                Screening</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-352">
-                                    <a href="#" class="elementor-item elementor-item-anchor">Pour les professionnels<span
-                                            class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-288">
-                                            <a href="#"
-                                                class="elementor-sub-item">Vérifications préalables des entreprises</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-295">
-                                            <a href="#"
-                                                class="elementor-sub-item">Renseignements sur les antécédents</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-292">
-                                            <a href="#"
-                                                class="elementor-sub-item">Preuves juridiques et assistance en cas de litige</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-299">
-                                            <a href="#"
-                                                class="elementor-sub-item">Opérations de surveillance</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-351">
-                                    <a href="#" class="elementor-item elementor-item-anchor">Pour les personnalités publiques<span
-                                            class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-296">
-                                            <a href="#"
-                                                class="elementor-sub-item">Assistance aux bureaux privés</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-291">
-                                            <a href="#"
-                                                class="elementor-sub-item">Assistance aux personnalités de premier plan</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-298">
-                                            <a href="#"
-                                                class="elementor-sub-item">Renseignements sur la réputation et les risques
-                                                Advisory</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Ouvrir le menu"
-                            aria-expanded="false">
-                            <svg aria-hidden="true" role="presentation"
-                                class="elementor-menu-toggle__icon--open e-font-icon-svg e-eicon-menu-bar"
-                                viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M104 333H896C929 333 958 304 958 271S929 208 896 208H104C71 208 42 237 42 271S71 333 104 333ZM104 583H896C929 583 958 554 958 521S929 458 896 458H104C71 458 42 487 42 521S71 583 104 583ZM104 833H896C929 833 958 804 958 771S929 708 896 708H104C71 708 42 737 42 771S71 833 104 833Z">
-                                </path>
-                            </svg><svg aria-hidden="true" role="presentation"
-                                class="elementor-menu-toggle__icon--close e-font-icon-svg e-eicon-close"
-                                viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
-                            <ul id="menu-2-2027870" class="elementor-nav-menu">
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-54 current_page_item menu-item-283">
-                                    <a href="#" aria-current="page"
-                                        class="elementor-item elementor-item-active" tabindex="-1">Accueil</a>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-284">
-                                    <a href="#" class="elementor-item"
-                                        tabindex="-1">À propos<span class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-286">
-                                            <a href="#" class="elementor-sub-item"
-                                                tabindex="-1">À propos</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-285">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Spécialistes de confiance et
-                                                capacité opérationnelle</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-353">
-                                    <a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Pour
-                                        Individuals<span class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-297">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Enquêtes relationnelles</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-294">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Recherche de personnes et
-                                                Verification</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-289">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Empreinte numérique et
-                                                Privacy Audits</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-293">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Online Threats, Harassment
-                                                &#038; usurpation d’identité</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-290">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Emploi et personnel de maison
-                                                Staff Screening</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-352">
-                                    <a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Pour
-                                        Professionals<span class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-288">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Vérifications préalables des entreprises</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-295">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Renseignements sur les antécédents
-                                                Intelligence</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-292">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Preuves juridiques et
-                                                Litigation Support</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-299">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Opérations de surveillance</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-351">
-                                    <a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Pour les personnalités publiques
-                                        Figures<span class="sub-arrow"><svg aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                                </path>
-                                            </svg></span></a>
-                                    <ul class="sub-menu elementor-nav-menu--dropdown">
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-296">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Assistance aux bureaux privés</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-291">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Personnalités de premier plan et figures publiques
-                                                Figure Support</a>
-                                        </li>
-                                        <li
-                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-298">
-                                            <a href="#"
-                                                class="elementor-sub-item" tabindex="-1">Réputation Intelligence &#038;
-                                                Risk Advisory</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="elementor-element elementor-element-9de857d e-con-full elementor-hidden-mobile e-flex e-con e-child"
-                    data-id="9de857d" data-element_type="container" data-e-type="container">
-                    <div class="elementor-element elementor-element-5261a56 elementor-mobile-align-justify elementor-widget elementor-widget-button"
-                        data-id="5261a56" data-element_type="widget" data-e-type="widget"
-                        data-widget_type="button.default">
-                        <a class="elementor-button elementor-button-link elementor-size-sm"
-                            href="#">
-                            <span class="elementor-button-content-wrapper">
-                                <span class="elementor-button-text">Ouvrir un dossier</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <!-- ═══ CUSTOM HEADER ═══ -->
+    <style>
+    .mi-header{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,3rem);height:72px;background:rgba(10,9,7,.88);backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);border-bottom:1px solid rgba(200,173,126,.12);transition:background .3s ease,box-shadow .3s ease;}
+    .mi-header.scrolled{background:rgba(8,7,5,.97);box-shadow:0 4px 32px rgba(0,0,0,.45);}
+    .mi-header__logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+    .mi-header__logo img{height:52px;width:auto;object-fit:contain;filter:drop-shadow(0 0 8px rgba(200,173,126,.35));transition:transform .3s ease,filter .3s ease;mix-blend-mode:lighten;border-radius:50%;background:transparent;}
+    .mi-header__logo:hover img{transform:scale(1.07) rotate(-2deg);filter:drop-shadow(0 0 16px rgba(200,173,126,.65));}
+    .mi-nav-wrap{display:flex;align-items:center;gap:clamp(.8rem,2vw,2.2rem);}
+    .mi-nav{display:flex;align-items:center;gap:clamp(.8rem,2vw,2.2rem);list-style:none;margin:0;padding:0;}
+    .mi-nav a{position:relative;color:rgba(246,243,238,.82);font-size:.875rem;font-weight:500;letter-spacing:.05em;text-decoration:none;padding:.3rem 0;transition:color .25s ease;white-space:nowrap;}
+    .mi-nav a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:#c8ad7e;border-radius:2px;transition:width .3s ease;}
+    .mi-nav a:hover,.mi-nav a.active{color:#c8ad7e;}
+    .mi-nav a:hover::after,.mi-nav a.active::after{width:100%;}
+    .mi-header__cta{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.4rem;border:1.5px solid rgba(200,173,126,.7);border-radius:999px;background:linear-gradient(135deg,rgba(200,173,126,.22) 0%,rgba(200,173,126,.08) 100%);color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-decoration:none;transition:all .3s cubic-bezier(.22,1,.36,1);flex-shrink:0;white-space:nowrap;text-shadow:0 1px 6px rgba(0,0,0,.8);box-shadow:0 0 0 1px rgba(200,173,126,.12),inset 0 1px 0 rgba(255,255,255,.08);}
+    .mi-header__cta:hover,.mi-header__cta:visited,.mi-header__cta:focus{background:linear-gradient(135deg,rgba(200,173,126,.38) 0%,rgba(200,173,126,.18) 100%);border-color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;color:#ffffff !important;transform:translateY(-2px);box-shadow:0 6px 24px rgba(200,173,126,.35),0 2px 8px rgba(0,0,0,.3);}
+    a.mi-header__cta,a.mi-header__cta:link,a.mi-header__cta:visited,a.mi-header__cta:active{color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;text-decoration:none !important;}
+    .mi-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.4rem;z-index:10001;}
+    .mi-burger span{display:block;width:24px;height:2px;background:#c8ad7e;border-radius:2px;transition:all .3s ease;}
+    .mi-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .mi-burger.open span:nth-child(2){opacity:0;}
+    .mi-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    @media(max-width:860px){
+      .mi-nav-wrap{position:fixed;top:72px;left:0;right:0;bottom:0;background:rgba(8,7,5,.97);flex-direction:column;justify-content:center;align-items:center;gap:2rem;transform:translateX(110%);transition:transform .35s ease;z-index:9998;}
+      .mi-nav-wrap.open{transform:translateX(0);}
+      .mi-nav{flex-direction:column;gap:1.5rem;text-align:center;}
+      .mi-nav a{font-size:1.1rem;}
+      .mi-burger{display:flex;}
+      .mi-header__cta.desktop-only{display:none;}
+    }
+    body{padding-top:72px !important;}
+    @keyframes mi-fadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:none;}}
+    @keyframes mi-scaleIn{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:scale(1);}}
+    @keyframes mi-slideLeft{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:none;}}
+    .mi-reveal{opacity:0;}
+    .mi-reveal.mi-visible{animation:mi-fadeUp .75s cubic-bezier(.22,1,.36,1) forwards;}
+    .mi-reveal-scale.mi-visible{animation:mi-scaleIn .7s cubic-bezier(.22,1,.36,1) forwards;}
+    .mi-reveal-left.mi-visible{animation:mi-slideLeft .7s cubic-bezier(.22,1,.36,1) forwards;}
+    .mi-tilt{transform-style:preserve-3d;transition:transform .35s ease,box-shadow .35s ease;}
+    .mi-tilt:hover{box-shadow:0 24px 60px rgba(0,0,0,.28);}
+    #mi-progress{position:fixed;top:72px;left:0;height:2px;background:linear-gradient(90deg,#c8ad7e,#ddc99f);z-index:9998;width:0;transition:width .08s linear;pointer-events:none;}
+    </style>
+    <div id="mi-progress"></div>
+    <header class="mi-header" id="mi-header">
+        <a href="#top" class="mi-header__logo" aria-label="Magic Investigation">
+            <img src="logo.png" alt="Magic Investigation" />
+        </a>
+        <div class="mi-nav-wrap" id="mi-nav-wrap">
+            <ul class="mi-nav" id="mi-nav">
+                <li><a href="#top">Accueil</a></li>
+                <li><a href="#sectors">Services</a></li>
+                <li><a href="#why-magic-title">Pourquoi nous</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="mi-header__cta" style="margin-top:1rem;color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;">Ouvrir un dossier &#8594;</a>
         </div>
+        <a href="#contact" class="mi-header__cta desktop-only" style="color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;">Ouvrir un dossier &#8594;</a>
+        <button class="mi-burger" id="mi-burger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </header>
+    <script>
+    (function(){
+      var burger=document.getElementById('mi-burger');
+      var wrap=document.getElementById('mi-nav-wrap');
+      var header=document.getElementById('mi-header');
+      var prog=document.getElementById('mi-progress');
+      if(burger&&wrap){
+        burger.addEventListener('click',function(){
+          var o=wrap.classList.toggle('open');
+          burger.classList.toggle('open',o);
+          burger.setAttribute('aria-expanded',String(o));
+        });
+        wrap.querySelectorAll('#mi-nav a').forEach(function(a){
+          a.addEventListener('click',function(){
+            wrap.classList.remove('open');
+            burger.classList.remove('open');
+          });
+        });
+      }
+      window.addEventListener('scroll',function(){
+        if(header) header.classList.toggle('scrolled',window.scrollY>40);
+        if(prog){
+          var h=document.documentElement.scrollHeight-window.innerHeight;
+          prog.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+        }
+      },{passive:true});
+      if('IntersectionObserver' in window){
+        var revObs=new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){
+              e.target.classList.add('mi-visible');
+              revObs.unobserve(e.target);
+            }
+          });
+        },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.mi-reveal,.mi-reveal-scale,.mi-reveal-left').forEach(function(el){
+          revObs.observe(el);
+        });
+      }
+      document.querySelectorAll('.mi-tilt').forEach(function(card){
+        card.addEventListener('mousemove',function(e){
+          var r=card.getBoundingClientRect();
+          var x=(e.clientX-r.left)/r.width-0.5;
+          var y=(e.clientY-r.top)/r.height-0.5;
+          card.style.transform='perspective(800px) rotateY('+(x*14)+'deg) rotateX('+(-y*10)+'deg) translateZ(6px)';
+        });
+        card.addEventListener('mouseleave',function(){card.style.transform='';});
+      });
+    })();
+    </script>
+
     <div data-elementor-type="wp-page" data-elementor-id="54" class="elementor elementor-54"
         data-elementor-post-type="page">
         <div class="elementor-element elementor-element-cd771ab e-flex e-con-boxed e-con e-parent" data-id="cd771ab"
@@ -1534,12 +1942,19 @@
                     <div class="elementor-element elementor-element-3aa174a elementor-widget elementor-widget-image"
                         data-id="3aa174a" data-element_type="widget" data-e-type="widget"
                         data-widget_type="image.default">
-                        <img decoding="async" width="1254" height="1254"
-                            src="https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3.webp"
-                            class="attachment-full size-full wp-image-1473"
-                            alt="Magic Investigation · monogramme embossé sur une couverture de dossier sombre avec des notes d’enquête"
-                            srcset="https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3.webp 1254w, https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3-300x300.webp 300w, https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3-1024x1024.webp 1024w, https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3-150x150.webp 150w, https://veraandvale.co.uk/wp-content/uploads/2026/08/download-3-768x768.webp 768w"
-                            sizes="(max-width: 1254px) 100vw, 1254px" />
+                        <div style="display:flex;align-items:center;justify-content:center;padding:2.5rem 1rem;">
+                          <img src="logo.png"
+                              alt="Magic Investigation — Détective Privé Casablanca"
+                              style="max-width:300px;width:100%;height:auto;
+                                     filter:drop-shadow(0 8px 32px rgba(200,173,126,0.5)) drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+                                     border-radius:20px;
+                                     animation:logoFloat 4s ease-in-out infinite;
+                                     background:rgba(11,10,8,0.65);
+                                     padding:1.5rem;
+                                     border:1px solid rgba(200,173,126,0.25);
+                                     box-shadow:0 0 60px rgba(200,173,126,0.18),inset 0 0 30px rgba(0,0,0,0.3);" />
+                        </div>
+                        <style>@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-1.5deg);}50%{transform:translateY(-16px) rotate(1.5deg);}}</style>
                     </div>
                 </div>
             </div>
@@ -2275,26 +2690,26 @@
             </div>
         </div>
         <section class="why-magic" aria-labelledby="why-magic-title">
-    <header class="why-magic__header">
+    <header class="why-magic__header mi-reveal">
         <p class="why-magic__eyebrow">À QUI NOUS NOUS ADRESSONS</p>
         <h2 id="why-magic-title">Pourquoi Magic Investigation ?</h2>
         <p>Choisir un enquêteur ne consiste pas simplement à engager quelqu’un pour recueillir des informations.</p>
         <p>Il s’agit de choisir une personne en qui vous pouvez avoir confiance.</p>
     </header>
     <div class="why-magic__grid">
-        <article class="why-magic__item">
+        <article class="why-magic__item mi-reveal mi-tilt">
             <h3>Fondée sur le renseignement</h3>
             <p>Chaque enquête commence par l’analyse du renseignement. Nous étudions la situation dans son ensemble avant de recommander des mesures adaptées, afin que nos enquêtes restent stratégiques, proportionnées et efficaces.</p>
         </article>
-        <article class="why-magic__item">
+        <article class="why-magic__item mi-reveal mi-tilt">
             <h3>Expertise professionnelle et universitaire</h3>
             <p>Magic Investigation a été fondée par Holly Harris, qui possède une solide expérience professionnelle.</p>
         </article>
-        <article class="why-magic__item">
+        <article class="why-magic__item mi-reveal mi-tilt">
             <h3>Des enquêtes sur mesure</h3>
             <p>Chaque client est unique. Nous adaptons chaque enquête à vos objectifs et faisons appel, si nécessaire, à un réseau de confiance d’agents de surveillance, de spécialistes du renseignement et d’enquêteurs au Maroc.</p>
         </article>
-        <article class="why-magic__item">
+        <article class="why-magic__item mi-reveal mi-tilt">
             <h3>Discrétion absolue</h3>
             <p>La confidentialité est au cœur de notre travail. Chaque demande est traitée avec la plus grande discrétion.</p>
         </article>
@@ -2458,205 +2873,758 @@
         </div>
         <section class="faq-section" id="faq" aria-labelledby="faq-title">
     <div class="faq-section__inner">
-        <header class="faq-section__header">
+        <header class="faq-section__header mi-reveal">
             <p class="faq-section__eyebrow">FAQ · MAGIC INVESTIGATION</p>
             <h2 id="faq-title">Questions fréquentes</h2>
             <p>Les réponses aux questions que vous pouvez vous poser avant de confier une mission à notre équipe.</p>
         </header>
         <div class="faq-list">
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Quels types de missions réalisez-vous ?</summary>
                 <div class="faq-item__answer"><p>Nous accompagnons les particuliers, les entreprises et les professionnels avec des enquêtes privées, des recherches et vérifications, des enquêtes relationnelles, des vérifications préalables et des missions de renseignement. Chaque demande est étudiée selon son contexte et ses objectifs.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Intervenez-vous à Casablanca et ailleurs au Maroc ?</summary>
                 <div class="faq-item__answer"><p>Nous sommes basés à Casablanca et étudions les demandes concernant Casablanca ainsi que d’autres villes du Maroc. La faisabilité dépend de la nature de la mission, du lieu et des informations disponibles.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Comment se déroule une première prise de contact ?</summary>
                 <div class="faq-item__answer"><p>Vous nous présentez votre situation et le résultat que vous souhaitez obtenir, sans partager d’informations sensibles qui ne sont pas nécessaires à ce stade. Nous échangeons ensuite sur le périmètre, les prochaines étapes et les éléments utiles à l’évaluation de votre demande.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Ma demande restera-t-elle confidentielle ?</summary>
                 <div class="faq-item__answer"><p>La discrétion est au cœur de notre approche. Les informations que vous nous communiquez sont traitées avec attention et utilisées pour évaluer et mener la mission. Les modalités de confidentialité sont précisées lors de nos échanges.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Les enquêtes sont-elles menées dans le respect de la loi ?</summary>
                 <div class="faq-item__answer"><p>Chaque demande est examinée au regard de son objectif et des règles applicables. Nous discutons avec vous des limites et des méthodes envisageables avant tout engagement. Nous ne pouvons pas accepter une mission qui impliquerait des actes illégaux ou une atteinte injustifiée aux droits d’autrui.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Combien de temps faut-il pour obtenir des résultats ?</summary>
                 <div class="faq-item__answer"><p>La durée varie selon la complexité de la situation, les lieux concernés et les éléments à vérifier. Après avoir compris votre besoin, nous vous indiquons une estimation et vous tenons informé des étapes convenues.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Combien coûte une mission d’enquête ?</summary>
                 <div class="faq-item__answer"><p>Le coût dépend du périmètre, du temps nécessaire, des déplacements et des ressources mobilisées. Nous clarifions les besoins et les modalités financières avant le démarrage afin que vous puissiez décider en connaissance de cause.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Comment les résultats me seront-ils communiqués ?</summary>
                 <div class="faq-item__answer"><p>Le format de restitution est défini selon la mission et les informations recueillies. Nous vous expliquons à l’avance ce qui pourra être communiqué et sous quelle forme, dans le respect des règles applicables et de la confidentialité convenue.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Puis-je vous contacter si ma situation est urgente ?</summary>
                 <div class="faq-item__answer"><p>Oui, indiquez dès le premier message le délai concerné et les raisons de l’urgence. Nous vous confirmerons rapidement si une prise en charge est possible. En cas de danger immédiat, contactez les services d’urgence locaux.</p></div>
             </details>
-            <details class="faq-item">
+            <details class="faq-item mi-reveal">
                 <summary>Comment vous transmettre des informations en toute discrétion ?</summary>
                 <div class="faq-item__answer"><p>Vous pouvez utiliser le formulaire de contact ou les coordonnées indiquées ci-dessous pour convenir d’un échange. Évitez d’envoyer des documents ou des données sensibles avant que nous ayons défini ensemble un moyen adapté.</p></div>
             </details>
         </div>
     </div>
 </section>
-<div class="elementor-element elementor-element-261ab893 e-flex e-con-boxed e-con e-parent contact-section" id="contact" data-id="261ab893"
-    data-element_type="container" data-e-type="container"
-    data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-    <div class="e-con-inner">
-        <div class="elementor-element elementor-element-3014f8fe e-con-full e-flex e-con e-child contact-details"
-            data-id="3014f8fe" data-element_type="container" data-e-type="container">
-            <div class="contact-details__intro">
-                <p class="contact-details__eyebrow">Casablanca · Maroc</p>
-                <h2>Parlons de votre besoin</h2>
-                <p>Décrivez brièvement votre demande. Nous vous répondrons en toute discrétion.</p>
+<!-- ═══════════════════════════════════════════════════════
+     CONTACT SECTION — Redesigned with 3D animations & live FX
+════════════════════════════════════════════════════════════ -->
+<style>
+/* Reset wrapper interference */
+#contact-v2, #contact-v2 * { background-color: transparent; box-sizing: border-box; }
+
+/* Section shell */
+#contact-v2 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(5rem, 9vw, 8rem) clamp(1rem, 4vw, 2.5rem);
+  background:
+    radial-gradient(ellipse at 8% 110%, rgba(200,173,126,.22) 0%, transparent 38%),
+    radial-gradient(ellipse at 92% -10%, rgba(146,123,92,.18) 0%, transparent 36%),
+    #0d0c0a;
+  font-family: inherit;
+}
+
+/* Animated canvas */
+#contact-v2 .cv2-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* 3-D rings */
+#contact-v2 .cv2-rings {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.cv2-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(200,173,126,.12);
+  animation: cv2-spin linear infinite;
+}
+.cv2-ring:nth-child(1) { width: 420px; height: 420px; top: 50%; left: -120px; margin-top: -210px; animation-duration: 28s; }
+.cv2-ring:nth-child(2) { width: 300px; height: 300px; top: 50%; left: -60px; margin-top: -150px; border-color: rgba(200,173,126,.07); animation-duration: 20s; animation-direction: reverse; }
+.cv2-ring:nth-child(3) { width: 180px; height: 180px; top: 12%; right: 8%; border-color: rgba(200,173,126,.09); animation-duration: 15s; }
+.cv2-ring:nth-child(4) { width: 90px; height: 90px; bottom: 10%; right: 22%; border-color: rgba(200,173,126,.08); animation-duration: 10s; animation-direction: reverse; }
+@keyframes cv2-spin { to { transform: rotateZ(360deg) rotateX(60deg); } }
+
+/* Floating glyphs */
+.cv2-glyph {
+  position: absolute;
+  font-size: 1.1rem;
+  color: rgba(200,173,126,.18);
+  animation: cv2-float 7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+.cv2-glyph:nth-child(1)  { top: 8%;  left: 7%;   animation-delay: 0s;   animation-duration: 8s; }
+.cv2-glyph:nth-child(2)  { top: 18%; left: 55%;  animation-delay: 1.2s; animation-duration: 9s; font-size:.85rem; }
+.cv2-glyph:nth-child(3)  { top: 70%; left: 12%;  animation-delay: 2.4s; animation-duration: 7s; }
+.cv2-glyph:nth-child(4)  { top: 85%; left: 60%;  animation-delay: 0.6s; animation-duration: 10s; font-size:.75rem; }
+.cv2-glyph:nth-child(5)  { top: 45%; left: 48%;  animation-delay: 3s;   animation-duration: 6s; }
+.cv2-glyph:nth-child(6)  { top: 60%; right: 6%;  animation-delay: 1.8s; animation-duration: 8.5s; }
+.cv2-glyph:nth-child(7)  { top: 30%; right: 12%; animation-delay: 0.4s; animation-duration: 11s; font-size:.7rem; }
+.cv2-glyph:nth-child(8)  { top: 5%;  right: 28%; animation-delay: 2.1s; animation-duration: 7.5s; }
+@keyframes cv2-float {
+  0%,100% { transform: translateY(0) rotate(0deg); opacity:.18; }
+  50%      { transform: translateY(-22px) rotate(8deg); opacity:.35; }
+}
+
+/* Grid layout */
+.cv2-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1.15fr);
+  gap: clamp(2.5rem,6vw,6rem);
+  align-items: center;
+  width: min(100%,1240px);
+  margin-inline: auto;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width:860px){ .cv2-grid { grid-template-columns:1fr; gap:2.5rem; } }
+
+/* LEFT */
+.cv2-left { display:flex; flex-direction:column; gap:0; }
+
+.cv2-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .42rem .88rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(200,173,126,.35);
+  border-radius: 999px;
+  background: rgba(200,173,126,.07);
+  color: #ddc99f;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.cv2-eyebrow::before {
+  content: '';
+  width: .42rem; height: .42rem;
+  border-radius: 50%;
+  background: #c8ad7e;
+  box-shadow: 0 0 10px rgba(200,173,126,.8);
+  animation: cv2-pulse 2s ease-in-out infinite;
+}
+@keyframes cv2-pulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.4);opacity:.7;} }
+
+.cv2-headline {
+  margin: 0 0 1.1rem;
+  color: #faf8f3;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: clamp(2.4rem,4.8vw,4.2rem);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 1.05;
+}
+.cv2-headline em {
+  font-style: normal;
+  background: linear-gradient(90deg,#c8ad7e,#f0ddb8,#c8ad7e);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: cv2-shine 4s linear infinite;
+}
+@keyframes cv2-shine { to { background-position:200% center; } }
+
+.cv2-subline {
+  margin: 0 0 2.5rem;
+  max-width: 32rem;
+  color: rgba(246,243,238,.62);
+  font-size: 1.03rem;
+  line-height: 1.8;
+}
+
+/* Contact cards */
+.cv2-cards { display:flex; flex-direction:column; gap:.7rem; }
+
+.cv2-card {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: .95rem 1.15rem;
+  border: 1px solid rgba(200,173,126,.14);
+  border-radius: 14px;
+  background: linear-gradient(120deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  backdrop-filter: blur(10px);
+  color: #f6f3ee;
+  text-decoration: none;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;
+  position: relative;
+  overflow: hidden;
+}
+.cv2-card::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(120deg,rgba(200,173,126,0),rgba(200,173,126,.12));
+  opacity:0; transition:opacity .3s; border-radius:inherit;
+}
+.cv2-card:hover { transform:translateX(8px); border-color:rgba(200,173,126,.5); box-shadow:0 12px 36px rgba(0,0,0,.3); }
+.cv2-card:hover::after { opacity:1; }
+
+.cv2-card-icon {
+  flex:0 0 3rem; width:3rem; height:3rem;
+  display:grid; place-items:center;
+  border:1px solid rgba(200,173,126,.35); border-radius:11px;
+  background:rgba(200,173,126,.09); color:#ddc99f; font-size:1.25rem;
+  transition:transform .3s,background .3s; position:relative; z-index:1;
+}
+.cv2-card:hover .cv2-card-icon { transform:scale(1.1) rotate(-5deg); background:rgba(200,173,126,.2); }
+
+.cv2-card-text { display:grid; gap:.18rem; min-width:0; position:relative; z-index:1; }
+.cv2-card-label { color:#c8ad7e; font-size:.66rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
+.cv2-card-value { color:#f7f4ed; font-size:.97rem; font-weight:500; overflow-wrap:anywhere; line-height:1.4; }
+
+.cv2-note {
+  display:flex; align-items:flex-start; gap:.75rem;
+  margin-top:1.4rem; padding:.9rem 1rem;
+  border:1px solid rgba(200,173,126,.14); border-radius:10px;
+  background:rgba(200,173,126,.04);
+  color:rgba(246,243,238,.55); font-size:.84rem; line-height:1.65;
+}
+.cv2-note-icon {
+  flex:0 0 1.6rem; width:1.6rem; height:1.6rem;
+  display:grid; place-items:center;
+  border:1px solid rgba(200,173,126,.4); border-radius:50%;
+  color:#c8ad7e; font-size:.75rem; margin-top:.05rem;
+}
+
+/* RIGHT */
+.cv2-form-wrap {
+  position:relative;
+  animation:cv2-rise .9s .2s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes cv2-rise { from{opacity:0;transform:translateY(32px) scale(.97);} to{opacity:1;transform:none;} }
+
+.cv2-form-wrap::before {
+  content:'';
+  position:absolute; inset:-2px; border-radius:22px;
+  background:linear-gradient(135deg,rgba(200,173,126,.5),rgba(200,173,126,0) 50%,rgba(200,173,126,.35));
+  z-index:-1; opacity:.7;
+}
+
+.cv2-form {
+  position:relative;
+  padding:clamp(1.75rem,3.5vw,2.75rem);
+  border:1px solid rgba(200,173,126,.28); border-radius:20px;
+  background:linear-gradient(150deg,rgba(26,22,16,.97) 0%,rgba(18,15,10,.99) 100%);
+  box-shadow:0 40px 100px rgba(0,0,0,.38),0 2px 10px rgba(0,0,0,.14);
+  overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.cv2-form::before {
+  content:''; position:absolute; inset:0 0 auto; height:4px;
+  background:linear-gradient(90deg,#927b5c,#d3c3a7,#c8ad7e,#927b5c);
+  background-size:200% auto; animation:cv2-shine 3s linear infinite;
+}
+
+.cv2-form-header { margin-bottom:1.5rem; padding:.3rem 0 1.1rem 1.1rem; border-left:3px solid #927b5c; }
+.cv2-form-header p { margin:0 0 .3rem; color:#927b5c; font-size:.7rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+.cv2-form-header h3 { margin:0 0 .4rem; color:#f0ebe2; font-size:clamp(1.5rem,2.5vw,2rem); letter-spacing:-.03em; line-height:1.2; }
+.cv2-form-header span { color:rgba(230,220,205,.58); font-size:.9rem; line-height:1.6; }
+
+.cv2-fields {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.75rem .9rem;
+}
+.cv2-field-full { grid-column:1/-1; }
+
+.cv2-field { display:flex; flex-direction:column; gap:.38rem; transition:transform .25s; }
+.cv2-field label {
+  display:flex; align-items:center; gap:.4rem;
+  color:rgba(220,205,180,.82); font-size:.78rem; font-weight:700; letter-spacing:.02em;
+}
+.cv2-lbl-icon { font-size:.9rem; }
+
+.cv2-field input,
+.cv2-field select,
+.cv2-field textarea {
+  width:100%; min-height:3rem; padding:.7rem .9rem;
+  border:1.5px solid rgba(200,173,126,.22); border-radius:10px;
+  color:#f0ebe2; background:rgba(255,255,255,.07);
+  font-family:inherit; font-size:.93rem; line-height:1.5;
+  transition:border-color .25s,box-shadow .25s,background .25s,transform .2s;
+  outline:none; appearance:none; -webkit-appearance:none;
+}
+.cv2-field input:hover,
+.cv2-field select:hover,
+.cv2-field textarea:hover { border-color:rgba(200,173,126,.5); }
+.cv2-field input:focus,
+.cv2-field select:focus,
+.cv2-field textarea:focus {
+  border-color:#c8ad7e; background:rgba(200,173,126,.12);
+  box-shadow:0 0 0 4px rgba(146,123,92,.14); transform:translateY(-1px);
+}
+.cv2-field textarea { min-height:8.5rem; resize:vertical; }
+.cv2-field input::placeholder,
+.cv2-field textarea::placeholder {
+  color: rgba(220,205,180,.38);
+  font-size: .88rem;
+}
+.cv2-field select option {
+  background: #181510;
+  color: #f0ebe2;
+  padding: .5rem;
+}
+.cv2-field input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85) sepia(40%) saturate(300%) hue-rotate(5deg);
+  cursor: pointer;
+  opacity: .8;
+  transition: opacity .2s;
+}
+.cv2-field input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+.cv2-field input:-webkit-autofill,
+.cv2-field textarea:-webkit-autofill {
+  -webkit-text-fill-color: #f0ebe2 !important;
+  -webkit-box-shadow: 0 0 0 1000px #1c1812 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.cv2-select-wrap { position:relative; }
+.cv2-select-wrap::after {
+  content:'\25BE'; position:absolute; right:.9rem; top:50%;
+  transform:translateY(-50%); color:#927b5c; pointer-events:none; font-size:.85rem;
+}
+
+.cv2-submit { grid-column:1/-1; margin-top:.2rem; }
+.cv2-btn {
+  position:relative; display:flex; align-items:center; justify-content:center;
+  gap:.65rem; width:100%; min-height:3.6rem; padding:.9rem 1.5rem;
+  border:1px solid rgba(200,173,126,.5); border-radius:11px;
+  background:linear-gradient(135deg,#c8ad7e 0%,#b3935c 50%,#9e7f49 100%);
+  color:#15120c; font-family:inherit; font-size:1rem; font-weight:800;
+  letter-spacing:.04em; cursor:pointer; overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s;
+  box-shadow:0 12px 30px rgba(200,173,126,.22), 0 4px 12px rgba(0,0,0,.3);
+}
+.cv2-btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,#e0cba3 0%,#c8ad7e 100%); opacity:0; transition:opacity .35s;
+}
+.cv2-btn:hover { transform:translateY(-3px); box-shadow:0 18px 45px rgba(200,173,126,.38); border-color:#e0cba3; }
+.cv2-btn:hover::before { opacity:1; }
+.cv2-btn span { position:relative; z-index:1; }
+.cv2-btn-icon { font-size:1.15rem; transition:transform .3s cubic-bezier(.2,.8,.2,1); }
+.cv2-btn:hover .cv2-btn-icon { transform:translateX(6px); }
+.cv2-btn::after {
+  content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-20deg); transition:left .6s;
+}
+.cv2-btn:hover::after { left:160%; }
+
+.cv2-badges { display:flex; flex-wrap:wrap; align-items:center; gap:.65rem; margin-top:1.15rem; }
+.cv2-badge {
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.35rem .75rem; border:1px solid rgba(200,173,126,.24); border-radius:999px;
+  color:rgba(230,220,205,.78); font-size:.7rem; font-weight:600; letter-spacing:.05em;
+  background:rgba(200,173,126,.08); backdrop-filter:blur(4px);
+}
+.cv2-badge-dot { width:.38rem; height:.38rem; border-radius:50%; background:#c8ad7e; box-shadow:0 0 6px rgba(200,173,126,.7); }
+
+@media (max-width:540px){
+  .cv2-fields { grid-template-columns:1fr; }
+  .cv2-field-full { grid-column:auto; }
+  .cv2-form { padding:1.5rem 1.1rem; border-radius:16px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .cv2-ring,.cv2-glyph,.cv2-headline em,.cv2-form::before,.cv2-eyebrow::before,.cv2-btn{animation:none!important;transition:none!important;}
+}
+</style>
+
+<section id="contact-v2" aria-labelledby="cv2-title">`n  <span id="contact" style="position:absolute;top:-40px;left:0;pointer-events:none;"></span>
+
+  <canvas class="cv2-canvas" id="cv2ParticleCanvas"></canvas>
+
+  <div class="cv2-rings" aria-hidden="true">
+    <div class="cv2-ring"></div>
+    <div class="cv2-ring"></div>
+    <div class="cv2-ring"></div>
+    <div class="cv2-ring"></div>
+  </div>
+
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+    <span class="cv2-glyph">&#128269;</span>
+    <span class="cv2-glyph">&#128737;</span>
+    <span class="cv2-glyph">&#128203;</span>
+    <span class="cv2-glyph">&#128274;</span>
+    <span class="cv2-glyph">&#128225;</span>
+    <span class="cv2-glyph">&#128194;</span>
+    <span class="cv2-glyph">&#9878;</span>
+    <span class="cv2-glyph">&#129517;</span>
+  </div>
+
+  <div class="cv2-grid">
+
+    <div class="cv2-left">
+
+      <span class="cv2-eyebrow">Casablanca &middot; Maroc</span>
+
+      <h2 class="cv2-headline" id="cv2-title">
+        Parlons de<br><em>votre besoin</em>
+      </h2>
+
+      <p class="cv2-subline">
+        D&eacute;crivez bri&egrave;vement votre demande.
+        Nous vous r&eacute;pondrons en toute discr&eacute;tion,
+        avec la pr&eacute;cision d&rsquo;un professionnel.
+      </p>
+
+      <div class="cv2-cards" role="list" aria-label="Coordonn&eacute;es de contact">
+
+        <a class="cv2-card" href="tel:+212665066015" role="listitem">
+          <span class="cv2-card-icon" aria-hidden="true">&#128222;</span>
+          <span class="cv2-card-text">
+            <span class="cv2-card-label">T&eacute;l&eacute;phone</span>
+            <span class="cv2-card-value">+212 665 066 015</span>
+          </span>
+        </a>
+
+        <a class="cv2-card" href="mailto:detectivefantome@gmail.com" role="listitem">
+          <span class="cv2-card-icon" aria-hidden="true">&#9993;</span>
+          <span class="cv2-card-text">
+            <span class="cv2-card-label">E-mail</span>
+            <span class="cv2-card-value">detectivefantome@gmail.com</span>
+          </span>
+        </a>
+
+        <a class="cv2-card" href="https://maps.app.goo.gl/2jKB3X1mmySf6Xct5" target="_blank" rel="noopener noreferrer" role="listitem">
+          <span class="cv2-card-icon" aria-hidden="true">&#128205;</span>
+          <span class="cv2-card-text">
+            <span class="cv2-card-label">Localisation</span>
+            <span class="cv2-card-value">Casablanca, Maroc &middot; Voir la carte</span>
+          </span>
+        </a>
+
+      </div>
+
+      <div class="cv2-note" role="note">
+        <span class="cv2-note-icon" aria-hidden="true">&#10003;</span>
+        <span>Votre premier &eacute;change reste confidentiel. Partagez uniquement les informations n&eacute;cessaires pour que nous puissions vous orienter.</span>
+      </div>
+
+    </div>
+
+    <div class="cv2-form-wrap">
+      <form class="cv2-form" method="post" name="Contactez-nous" aria-label="Contactez-nous">
+
+        <input type="hidden" name="post_id" value="124">
+        <input type="hidden" name="form_id" value="d95582f">
+        <input type="hidden" name="referer_title" value="Enqu&ecirc;teur priv&eacute; &agrave; Casablanca | Magic Investigation">
+
+        <div class="cv2-form-header">
+          <p>MISSION CONFIDENTIELLE</p>
+          <h3>&Eacute;crivez-nous</h3>
+          <span>Pr&eacute;sentez votre demande en quelques mots. Notre &eacute;quipe vous r&eacute;pondra avec discr&eacute;tion.</span>
+        </div>
+
+        <div class="cv2-fields">
+
+          <div class="cv2-field">
+            <label for="cv2-email">
+              <span class="cv2-lbl-icon">&#9993;</span> Adresse e-mail <span style="color:#c8ad7e">*</span>
+            </label>
+            <input type="email" id="cv2-email" name="form_fields[email]" placeholder="votre@email.com" required>
+          </div>
+
+          <div class="cv2-field">
+            <label for="cv2-phone">
+              <span class="cv2-lbl-icon">&#128222;</span> Num&eacute;ro de t&eacute;l&eacute;phone
+            </label>
+            <input type="tel" id="cv2-phone" name="form_fields[field_e10218e]" placeholder="+212 ...">
+          </div>
+
+          <div class="cv2-field">
+            <label for="cv2-mode">
+              <span class="cv2-lbl-icon">&#128172;</span> Mode de contact pr&eacute;f&eacute;r&eacute;
+            </label>
+            <div class="cv2-select-wrap">
+              <select id="cv2-mode" name="form_fields[field_4932e4c]">
+                <option value="E-mail">E-mail</option>
+                <option value="Appel telephonique">Appel t&eacute;l&eacute;phonique</option>
+                <option value="Message securise">Message s&eacute;curis&eacute;</option>
+              </select>
             </div>
-            <div class="contact-methods" aria-label="Coordonnées de contact">
-    <a class="contact-method" href="tel:+212665066015">
-        <span class="contact-method__icon" aria-hidden="true">T</span>
-        <span><small>Téléphone</small><strong>+212 665 066 015</strong></span>
-    </a>
-    
-    <a class="contact-method" href="mailto:detectivefantome@gmail.com">
-        <span class="contact-method__icon" aria-hidden="true">@</span>
-        <span><small>E-mail</small><strong>detectivefantome@gmail.com</strong></span>
-    </a>
-    <a class="contact-method" href="https://maps.app.goo.gl/2jKB3X1mmySf6Xct5" target="_blank" rel="noopener noreferrer">
-        <span class="contact-method__icon" aria-hidden="true">↗</span>
-        <span><small>Localisation</small><strong>Casablanca, Maroc · Voir la carte</strong></span>
-    </a>
-</div>
+          </div>
+
+          <div class="cv2-field">
+            <label for="cv2-subject">
+              <span class="cv2-lbl-icon">&#128203;</span> Objet de la demande
+            </label>
+            <input type="text" id="cv2-subject" name="form_fields[field_f0f056b]" placeholder="Ex : Surveillance, v&eacute;rification...">
+          </div>
+
+          <div class="cv2-field cv2-field-full">
+            <label for="cv2-date">
+              <span class="cv2-lbl-icon">&#128197;</span> Moment souhait&eacute; pour &ecirc;tre contact&eacute;
+            </label>
+            <input type="date" id="cv2-date" name="form_fields[field_cf518ee]">
+          </div>
+
+          <div class="cv2-field cv2-field-full">
+            <label for="cv2-message">
+              <span class="cv2-lbl-icon">&#128221;</span> Comment pouvons-nous vous aider ?
+            </label>
+            <textarea id="cv2-message" name="form_fields[message]" rows="4"
+              placeholder="D&eacute;crivez votre situation ou vos besoins en mati&egrave;re d&rsquo;enqu&ecirc;te..."></textarea>
+          </div>
+
+          <div class="cv2-submit">
+            <button type="submit" class="cv2-btn">
+              <span>Envoyer ma demande</span>
+              <span class="cv2-btn-icon" aria-hidden="true">&#10148;</span>
+            </button>
+            <div class="cv2-badges">
+              <span class="cv2-badge"><span class="cv2-badge-dot"></span>R&eacute;ponse sous 24 h</span>
+              <span class="cv2-badge"><span class="cv2-badge-dot"></span>100 % confidentiel</span>
+              <span class="cv2-badge"><span class="cv2-badge-dot"></span>Sans engagement</span>
+            </div>
+          </div>
 
         </div>
-        <div class="elementor-element elementor-element-0906d7d e-con-full e-flex elementor-invisible e-con e-child"
-                    data-id="0906d7d" data-element_type="container" data-e-type="container"
-                    data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;}">
-                    <div class="elementor-element elementor-element-d95582f elementor-button-align-stretch elementor-widget elementor-widget-form"
-                        data-id="d95582f" data-element_type="widget" data-e-type="widget"
-                        data-settings="{&quot;step_next_label&quot;:&quot;Suivant&quot;,&quot;step_previous_label&quot;:&quot;Précédent&quot;,&quot;button_width_mobile&quot;:&quot;100&quot;,&quot;button_width&quot;:&quot;100&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}"
-                        data-widget_type="form.default">
-                        <form class="elementor-form" method="post" name="Contactez-nous" aria-label="Contactez-nous">
-                            <div class="contact-form__intro"><h3>Écrivez-nous</h3><span>Présentez votre demande en quelques mots. Notre équipe vous répondra avec discrétion.</span></div>
-                            <input type="hidden" name="post_id" value="124" />
-                            <input type="hidden" name="form_id" value="d95582f" />
-                            <input type="hidden" name="referer_title" value="Enquêteur privé à Casablanca | Magic Investigation" />
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  var canvas = document.getElementById('cv2ParticleCanvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W=0,H=0,particles=[],running=false;
+  function resize(){
+    var r=canvas.parentElement.getBoundingClientRect();
+    W=canvas.width=r.width||window.innerWidth;
+    H=canvas.height=r.height||600;
+  }
+  function Particle(){ this.reset(); }
+  Particle.prototype.reset=function(){
+    this.x=Math.random()*W; this.y=Math.random()*H;
+    this.r=Math.random()*1.5+.4;
+    this.vx=(Math.random()-.5)*.35; this.vy=(Math.random()-.5)*.35;
+    this.a=Math.random()*.35+.08;
+  };
+  Particle.prototype.update=function(){
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<0||this.x>W||this.y<0||this.y>H) this.reset();
+  };
+  Particle.prototype.draw=function(){
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(200,173,126,'+this.a+')'; ctx.fill();
+  };
+  function connect(){
+    for(var i=0;i<particles.length;i++){
+      for(var j=i+1;j<particles.length;j++){
+        var dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<110){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle='rgba(200,173,126,'+(0.1*(1-d/110))+')';
+          ctx.lineWidth=0.6; ctx.stroke();
+        }
+      }
+    }
+  }
+  function init(){
+    resize(); particles=[];
+    for(var k=0;k<80;k++) particles.push(new Particle());
+  }
+  function loop(){
+    if(!running) return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<particles.length;i++){ particles[i].update(); particles[i].draw(); }
+    connect();
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener('resize',function(){ resize(); for(var i=0;i<particles.length;i++) particles[i].reset(); });
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting&&!running){ running=true; init(); loop(); obs.disconnect(); }
+    },{threshold:.05});
+    obs.observe(document.getElementById('contact-v2'));
+  } else { running=true; init(); loop(); }
+})();
+
+(function(){
+  var wrap=document.querySelector('.cv2-form-wrap');
+  if(!wrap) return;
+  var inner=wrap.querySelector('.cv2-form');
+  if(!inner) return;
+  wrap.addEventListener('mousemove',function(e){
+    var r=wrap.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width-.5;
+    var y=(e.clientY-r.top)/r.height-.5;
+    inner.style.transform='perspective(900px) rotateY('+(x*7)+'deg) rotateX('+(-y*5)+'deg) translateZ(4px)';
+  });
+  wrap.addEventListener('mouseleave',function(){ inner.style.transform=''; });
+})();
+
+(function(){
+  var fields=document.querySelectorAll('.cv2-field input,.cv2-field select,.cv2-field textarea');
+  for(var i=0;i<fields.length;i++){
+    (function(el){
+      el.addEventListener('focus',function(){ el.closest('.cv2-field').style.transform='translateY(-2px)'; });
+      el.addEventListener('blur',function(){ el.closest('.cv2-field').style.transform=''; });
+    })(fields[i]);
+  }
+})();
+
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  var items=document.querySelectorAll('#contact-v2 .cv2-eyebrow,#contact-v2 .cv2-headline,#contact-v2 .cv2-subline,#contact-v2 .cv2-cards,#contact-v2 .cv2-note');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e,i){
+      if(e.isIntersecting){
+        (function(el,idx){ setTimeout(function(){ el.style.opacity='1'; el.style.transform='none'; },idx*120); })(e.target,i);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.1});
+  items.forEach(function(el){
+    el.style.opacity='0'; el.style.transform='translateY(20px)';
+    el.style.transition='opacity .7s ease,transform .7s ease';
+    obs.observe(el);
+  });
+})();
+</script>
 
 
-                            <div class="elementor-form-fields-wrapper elementor-labels-above">
-                                <div
-                                    class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-50 elementor-field-required">
-                                    <label for="form-field-email" class="elementor-field-label">
-                                        Adresse e-mail </label>
-                                    <input size="1" type="email" name="form_fields[email]" id="form-field-email"
-                                        class="elementor-field elementor-size-sm  elementor-field-textual"
-                                        required="required">
-                                </div>
-                                <div
-                                    class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_e10218e elementor-col-50">
-                                    <label for="form-field-field_e10218e" class="elementor-field-label">
-                                        Numéro de téléphone </label>
-                                    <input size="1" type="tel" name="form_fields[field_e10218e]"
-                                        id="form-field-field_e10218e"
-                                        class="elementor-field elementor-size-sm  elementor-field-textual">
-                                </div>
-                                <div
-                                    class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_4932e4c elementor-col-50">
-                                    <label for="form-field-field_4932e4c" class="elementor-field-label">
-                                        Mode de contact préféré </label>
-                                    <div class="elementor-field elementor-select-wrapper remove-before ">
-                                        <div class="select-caret-down-wrapper">
-                                            <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down"
-                                                viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <select name="form_fields[field_4932e4c]" id="form-field-field_4932e4c"
-                                            class="elementor-field-textual elementor-size-sm">
-                                            <option value="E-mail">E-mail</option>
-                                            <option value="Appel téléphonique">Appel téléphonique</option>
-                                            <option value="Message sécurisé">Message sécurisé</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div
-                                    class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_f0f056b elementor-col-50">
-                                    <label for="form-field-field_f0f056b" class="elementor-field-label">
-                                        Objet de la demande </label>
-                                    <input size="1" type="text" name="form_fields[field_f0f056b]"
-                                        id="form-field-field_f0f056b"
-                                        class="elementor-field elementor-size-sm  elementor-field-textual">
-                                </div>
-                                <div
-                                    class="elementor-field-type-date elementor-field-group elementor-column elementor-field-group-field_cf518ee elementor-col-50">
-                                    <label for="form-field-field_cf518ee" class="elementor-field-label">
-                                        Moment souhaité pour être contacté </label>
+        <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__top">
 
-                                    <input type="date" name="form_fields[field_cf518ee]" id="form-field-field_cf518ee"
-                                        class="elementor-field elementor-size-sm  elementor-field-textual elementor-date-field"
-                                        pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-                                </div>
-                                <div
-                                    class="elementor-field-type-textarea elementor-field-group elementor-column elementor-field-group-message elementor-col-100">
-                                    <label for="form-field-message" class="elementor-field-label">
-                                        Comment pouvons-nous vous aider ? </label>
-                                    <textarea class="elementor-field-textual elementor-field  elementor-size-sm"
-                                        name="form_fields[message]" id="form-field-message" rows="4"
-                                        placeholder="Décrivez votre situation ou vos besoins en matière d’enquête"></textarea>
-                                </div>
-                                <div
-                                    class="elementor-field-type-recaptcha_v3 elementor-field-group elementor-column elementor-field-group-field_9f9a1f1 elementor-col-100 recaptcha_v3-bottomright">
-                                    <div class="elementor-field" id="form-field-field_9f9a1f1">
-                                        <div class="elementor-g-recaptcha"
-                                            data-sitekey="6LepIo4tAAAAAGK9lCeWTMaVSPj09K95R_SGLxi4" data-type="v3"
-                                            data-action="Form" data-badge="bottomright" data-size="invisible"></div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons elementor-sm-100">
-                                    <button class="elementor-button elementor-size-sm" type="submit">
-                                        <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text">Envoyer le message</span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+            <!-- Col 1: Brand & Status -->
+            <div class="site-footer__brand mi-reveal-scale">
+                <a class="site-footer__wordmark" href="#top" aria-label="Magic Investigation, accueil">
+                    <span class="site-footer__wordmark-icon" aria-hidden="true">&#9878;</span>
+                    MAGIC <span>INVESTIGATION</span>
+                </a>
+                <p>Cabinet d’investigations privées, de surveillance discrète et de renseignement stratégique à Casablanca et à travers tout le Maroc.</p>
+                <div class="site-footer__status-badge">
+                    <span class="site-footer__status-dot" aria-hidden="true"></span>
+                    <span>Permanence &amp; Accueil confidentiel 24/7</span>
+                </div>
+            </div>
+
+            <!-- Col 2: Services / Navigation -->
+            <nav class="site-footer__col mi-reveal" aria-label="Services et navigation">
+                <h3 class="site-footer__col-title">Services clés</h3>
+                <div class="site-footer__nav">
+                    <a href="#sectors">Enquêtes pour particuliers</a>
+                    <a href="#sectors">Renseignement d’affaires</a>
+                    <a href="#sectors">Surveillance &amp; filatures</a>
+                    <a href="#sectors">Audits de confidentialité</a>
+                    <a href="#faq">Questions fréquentes</a>
+                    <a href="#contact">Demander un devis</a>
+                </div>
+            </nav>
+
+            <!-- Col 3: Déontologie & Engagements -->
+            <div class="site-footer__col mi-reveal">
+                <h3 class="site-footer__col-title">Engagements</h3>
+                <div class="site-footer__guarantees">
+                    <div class="site-footer__guarantee-card mi-tilt">
+                        <span class="site-footer__guarantee-icon" aria-hidden="true">&#128737;</span>
+                        <div class="site-footer__guarantee-text">
+                            <strong>Secret absolu</strong>
+                            <span>Confidentialité contractuelle et discrétion rigoureuse.</span>
+                        </div>
+                    </div>
+                    <div class="site-footer__guarantee-card mi-tilt">
+                        <span class="site-footer__guarantee-icon" aria-hidden="true">&#9878;</span>
+                        <div class="site-footer__guarantee-text">
+                            <strong>Rapports certifiés</strong>
+                            <span>Éléments probants exploitables devant les juridictions.</span>
+                        </div>
+                    </div>
+                    <div class="site-footer__guarantee-card mi-tilt">
+                        <span class="site-footer__guarantee-icon" aria-hidden="true">&#129517;</span>
+                        <div class="site-footer__guarantee-text">
+                            <strong>Casablanca &amp; Maroc</strong>
+                            <span>Capacité opérationnelle et déploiement immédiat.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <footer class="site-footer">
-    <div class="site-footer__inner">
-        <div class="site-footer__top">
-            <div class="site-footer__brand">
-                <a class="site-footer__wordmark" href="#top" aria-label="Magic Investigation, accueil">MAGIC <span>INVESTIGATION</span></a>
-                <p>Enquêtes privées et renseignement à Casablanca, au Maroc. Une approche discrète, réfléchie et adaptée à votre situation.</p>
+
+            <!-- Col 4: Contact direct -->
+            <div class="site-footer__col mi-reveal">
+                <h3 class="site-footer__col-title">Contact direct</h3>
+                <div class="site-footer__contact">
+                    <a class="site-footer__contact-pill mi-tilt" href="tel:+212665066015">
+                        <span class="site-footer__contact-icon" aria-hidden="true">&#128222;</span>
+                        <span class="site-footer__contact-meta">
+                            <small>Ligne directe</small>
+                            <strong>+212 665 066 015</strong>
+                        </span>
+                    </a>
+                    <a class="site-footer__contact-pill mi-tilt" href="mailto:detectivefantome@gmail.com">
+                        <span class="site-footer__contact-icon" aria-hidden="true">&#9993;</span>
+                        <span class="site-footer__contact-meta">
+                            <small>Courriel sécurisé</small>
+                            <strong>detectivefantome@gmail.com</strong>
+                        </span>
+                    </a>
+                    <a class="site-footer__contact-pill mi-tilt" href="https://maps.app.goo.gl/2jKB3X1mmySf6Xct5" target="_blank" rel="noopener noreferrer">
+                        <span class="site-footer__contact-icon" aria-hidden="true">&#128205;</span>
+                        <span class="site-footer__contact-meta">
+                            <small>Siège opérationnel</small>
+                            <strong>Casablanca, Maroc &middot; Itinéraire</strong>
+                        </span>
+                    </a>
+                </div>
             </div>
-            <nav class="site-footer__nav" aria-label="Navigation de pied de page">
-                <h2>Navigation</h2>
-                <a href="#faq">Questions fréquentes</a>
-                <a href="#contact">Nous contacter</a>
-                <a href="#top">Retour en haut</a>
-            </nav>
-            <div class="site-footer__contact">
-                <h2>Coordonnées</h2>
-                <a href="tel:+212665066015">+212 665 066 015</a>
-                <a href="mailto:detectivefantome@gmail.com">detectivefantome@gmail.com</a>
-                <a href="https://maps.app.goo.gl/2jKB3X1mmySf6Xct5" target="_blank" rel="noopener noreferrer">Casablanca, Maroc · Itinéraire</a>
-            </div>
+
         </div>
+
+        <!-- Bottom bar -->
         <div class="site-footer__bottom">
-            <p>© 2026 Magic Investigation. Tous droits réservés.</p>
-            <p>La discrétion au service de vos réponses.</p>
+            <div class="site-footer__bottom-left">
+                <span>&copy; 2026 Magic Investigation. Tous droits réservés.</span>
+                <span>&bull;</span>
+                <span>Détectives privés assermentés &middot; Casablanca, Maroc</span>
+            </div>
+            <a class="site-footer__back-to-top" href="#top" aria-label="Remonter en haut de page">
+                <span>Haut de page</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+            </a>
         </div>
     </div>
 </footer>
@@ -2727,8 +3695,6 @@
         defer></script>
     <script id="flatpickr-js"
         src="https://veraandvale.co.uk/wp-content/plugins/elementor/assets/lib/flatpickr/flatpickr.min.js?ver=4.6.13"></script>
-    <script id="elementor-recaptcha_v3-api-js"
-        src="https://www.google.com/recaptcha/api.js?render=explicit&#038;ver=4.4.0"></script>
     <script id="wp-hooks-js"
         src="https://veraandvale.co.uk/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255"></script>
     <script id="wp-i18n-js"
@@ -2753,6 +3719,41 @@
         var e = "script#wp-emoji-settings", t = document.querySelector(e); if (!(t instanceof HTMLScriptElement)) throw new Error("Element missing: " + e); const r = JSON.parse(t.text), s = (window._wpemojiSettings = r, "wpEmojiSettingsSupports"), o = ["flag", "emoji"]; function i(e) { try { var t = { supportTests: e, timestamp: (new Date).valueOf() }; sessionStorage.setItem(s, JSON.stringify(t)) } catch (e) { } } function c(e, t, n) { e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0); t = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data); e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(n, 0, 0); const r = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data); return t.every((e, t) => e === r[t]) } function p(e, t) { e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0); var n = e.getImageData(16, 16, 1, 1); for (let e = 0; e < n.data.length; e++)if (0 !== n.data[e]) return !1; return !0 } function u(e, t, n, r) { switch (t) { case "flag": return n(e, "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f", "\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f") ? !1 : !n(e, "\ud83c\udde8\ud83c\uddf6", "\ud83c\udde8\u200b\ud83c\uddf6") && !n(e, "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f", "\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f"); case "emoji": return !r(e, "\ud83e\u1fac8") }return !1 } function f(e, t, n, r) { let a; const s = (a = "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? new OffscreenCanvas(300, 150) : document.createElement("canvas")).getContext("2d", { willReadFrequently: !0 }), o = (s.textBaseline = "top", s.font = "600 32px Arial", {}); return e.forEach(e => { o[e] = t(s, e, n, r) }), o } function a(e) { var t = document.createElement("script"); t.src = e, t.defer = !0, document.head.appendChild(t) } r.supports = { everything: !0, everythingExceptFlag: !0 }, new Promise(t => { let n = function () { try { var e = JSON.parse(sessionStorage.getItem(s)); if ("object" == typeof e && "number" == typeof e.timestamp && (new Date).valueOf() < e.timestamp + 604800 && "object" == typeof e.supportTests) return e.supportTests } catch (e) { } return null }(); if (!n) { if ("undefined" != typeof Worker && "undefined" != typeof OffscreenCanvas && "undefined" != typeof URL && URL.createObjectURL && "undefined" != typeof Blob) try { var e = "postMessage(" + f.toString() + "(" + [JSON.stringify(o), u.toString(), c.toString(), p.toString()].join(",") + "));", r = new Blob([e], { type: "text/javascript" }); const a = new Worker(URL.createObjectURL(r), { name: "wpTestEmojiSupports" }); return void (a.onmessage = e => { i(n = e.data), a.terminate(), t(n) }) } catch (e) { } i(n = f(o, u, c, p)) } t(n) }).then(e => { for (const n in e) r.supports[n] = e[n], r.supports.everything = r.supports.everything && r.supports[n], "flag" !== n && (r.supports.everythingExceptFlag = r.supports.everythingExceptFlag && r.supports[n]); var t; r.supports.everythingExceptFlag = r.supports.everythingExceptFlag && !r.supports.flag, r.supports.everything || ((t = r.source || {}).concatemoji ? a(t.concatemoji) : t.wpemoji && t.twemoji && (a(t.twemoji), a(t.wpemoji))) });
         //# sourceURL=https://veraandvale.co.uk/wp-includes/js/wp-emoji-loader.min.js
     </script>
+
+
+<script>
+window.addEventListener("load",function(){
+  if(!("IntersectionObserver" in window)){
+    document.querySelectorAll(".mi-reveal,.mi-reveal-scale,.mi-reveal-left").forEach(function(el){el.classList.add("mi-visible");});
+    return;
+  }
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("mi-visible");obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:"0px 0px -30px 0px"});
+  document.querySelectorAll(".mi-reveal,.mi-reveal-scale,.mi-reveal-left").forEach(function(el){
+    if(!el.classList.contains("mi-visible")) obs.observe(el);
+  });
+  document.querySelectorAll(".mi-tilt").forEach(function(card){
+    card.addEventListener("mousemove",function(e){
+      var r=card.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-0.5;
+      var y=(e.clientY-r.top)/r.height-0.5;
+      card.style.transform="perspective(900px) rotateY("+(x*14)+"deg) rotateX("+(-y*10)+"deg) translateZ(6px)";
+    });
+    card.addEventListener("mouseleave",function(){card.style.transform="";});
+  });
+});
+</script>
+
+<script>
+(function(){
+  // Move footer to be a direct child of body for full-width rendering
+  var footer = document.querySelector('footer.site-footer');
+  if(footer && footer.parentElement !== document.body){
+    document.body.appendChild(footer);
+  }
+})();
+</script>
 
 </body>
 
